@@ -1,42 +1,50 @@
 package StepDefinition;
 
+import Pages.BaseClass;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class BuyProduct {
-    @Given("Go to the Website.")
-    public void go_to_the_website() {
+import java.io.IOException;
 
+public class BuyProduct extends BaseClass {
+    @Given("Go to the Website.")
+    public void go_to_the_website() throws IOException {
+        Setup();
+        pageFactory.getProductBuy().WebsiteURL();
     }
 
     @Given("Navigate to Computer section")
     public void navigate_to_computer_section() {
-
+        pageFactory.getProductBuy().Computer("Computers ");
     }
 
     @Given("Click on Notebooks")
     public void click_on_notebooks() {
-
+        pageFactory.getProductBuy().Categories(" Notebooks ");
     }
 
     @Given("Sort the items by Price to maximum")
     public void sort_the_items_by_price_to_maximum() {
+        pageFactory.getProductBuy().Sort("Price: Low to High");
 
     }
 
     @Given("Get the results listed with Name and Price")
     public void get_the_results_listed_with_name_and_price() {
+        pageFactory.getProductBuy().ProductDetails();
 
     }
 
     @Given("Add  item to the cart")
-    public void add_item_to_the_cart() {
+    public void add_item_to_the_cart() throws InterruptedException {
+        pageFactory.getProductBuy().VerifyMessage();
 
     }
 
     @Given("Go to shopping cart page from Nav bar and verify item is added to cart")
     public void go_to_shopping_cart_page_from_nav_bar_and_verify_item_is_added_to_cart() {
+
 
     }
 

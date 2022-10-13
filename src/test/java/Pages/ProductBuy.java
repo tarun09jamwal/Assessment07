@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
+import Enum.ProducBuyEnum;
 
 public class ProductBuy {
     WebDriver driver;
@@ -30,7 +31,7 @@ public class ProductBuy {
     String price = "//div[@class='prices']";
     String products = "//h2[@class='product-title']//a[contains(text(),'%s')]";
     String checkout1 = "//button[contains(text(),'%s')]";
-    String userDetail = "//input[@id='%s' and @name='%s']";
+    String userDetail = "//input[@name='%s']";
     String continueButton = "//button[@onclick='%s']";
     By display = By.xpath("//select[@name='products-pagesize']");
     By sortByDropDown = By.xpath("//select[@name='products-orderby']");
@@ -60,18 +61,18 @@ public class ProductBuy {
     }
 
     public void Computer() {
-        driver.findElement(By.xpath(String.format(product, "Computers "))).click();
+        driver.findElement(By.xpath(String.format(product, ProducBuyEnum.PRODUCT.getResourcesName()))).click();
     }
 
     public void Categories() {
-        driver.findElement(By.xpath(String.format(categories, " Notebooks "))).click();
+        driver.findElement(By.xpath(String.format(categories,ProducBuyEnum.CATEGORIES.getResourcesName()))).click();
     }
 
     public void Sort() {
         driver.findElement(sortByDropDown).click();
-        driver.findElement(By.xpath(String.format(options, "Price: Low to High"))).click();
+        driver.findElement(By.xpath(String.format(options,ProducBuyEnum.OPTIONS.getResourcesName()))).click();
         driver.findElement(display).click();
-        driver.findElement(By.xpath(String.format(displaySize, "9"))).click();
+        driver.findElement(By.xpath(String.format(displaySize, ProducBuyEnum.DISPLAYSIZE.getResourcesName()))).click();
     }
 
     public void ProductDetails() {
@@ -94,10 +95,10 @@ public class ProductBuy {
 
     public void VerifyMessage() {
         try {
-            driver.findElement(By.xpath(String.format(products, "Apple MacBook Pro 13-inch"))).click();
+            driver.findElement(By.xpath(String.format(products, ProducBuyEnum.PRODUCTNAME.getResourcesName()))).click();
 
         } catch (StaleElementReferenceException elementHasDisappeared) {
-            driver.findElement(By.xpath(String.format(products, "Apple MacBook Pro 13-inch"))).click();
+            driver.findElement(By.xpath(String.format(products, ProducBuyEnum.PRODUCTNAME.getResourcesName()))).click();
 
         }
         driver.findElement(addtoCart).click();
@@ -114,11 +115,11 @@ public class ProductBuy {
 
     public void Checkout() {
         driver.findElement(checkBox).click();
-        driver.findElement(By.xpath(String.format(checkout1, "Checkout "))).click();
+        driver.findElement(By.xpath(String.format(checkout1, ProducBuyEnum.CHECKOUT.getResourcesName()))).click();
     }
 
     public void RegisterUser() throws IOException {
-        driver.findElement(By.xpath(String.format(checkout1, "Register"))).click();
+        driver.findElement(By.xpath(String.format(checkout1, ProducBuyEnum.REGISTER.getResourcesName()))).click();
         driver.findElement(gender).click();
         String path = System.getProperty("user.dir") + "//src//test//java//UserData//UserDetails.xlsx";
         FileInputStream prop1 = null;
@@ -136,15 +137,15 @@ public class ProductBuy {
         String password = sheet.getRow(1).getCell(4).getStringCellValue();
         String confirmPassword = sheet.getRow(1).getCell(5).getStringCellValue();
 
-        driver.findElement(By.xpath(String.format(checkout1, "Register"))).click();
+        driver.findElement(By.xpath(String.format(checkout1, ProducBuyEnum.REGISTER.getResourcesName()))).click();
         driver.findElement(gender).click();
-        driver.findElement(By.xpath(String.format(userDetail, "FirstName", "FirstName"))).sendKeys(userFirstName);
-        driver.findElement(By.xpath(String.format(userDetail, "LastName", "LastName"))).sendKeys(userSecondName);
-        driver.findElement(By.xpath(String.format(userDetail, "Email", "Email"))).sendKeys(s + userEmail);
-        driver.findElement(By.xpath(String.format(userDetail, "Company", "Company"))).sendKeys(company);
-        driver.findElement(By.xpath(String.format(userDetail, "Password", "Password"))).sendKeys(password);
-        driver.findElement(By.xpath(String.format(userDetail, "ConfirmPassword", "ConfirmPassword"))).sendKeys(confirmPassword);
-        driver.findElement(By.xpath(String.format(checkout1, "Register"))).click();
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.FIRSTNAME.getResourcesName()))).sendKeys(userFirstName);
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.LASTNAME.getResourcesName()))).sendKeys(userSecondName);
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.EMAIL.getResourcesName()))).sendKeys(s + userEmail);
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.COMPANY.getResourcesName()))).sendKeys(company);
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.PASSWORD.getResourcesName()))).sendKeys(password);
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.CONFIRMPASSWORD.getResourcesName()))).sendKeys(confirmPassword);
+        driver.findElement(By.xpath(String.format(checkout1, ProducBuyEnum.REGISTER.getResourcesName()))).click();
     }
 
     public void ProductQuantity(String shoppingCart) throws IOException {
@@ -162,7 +163,7 @@ public class ProductBuy {
         String productQuantity = sheet.getRow(1).getCell(6).getStringCellValue();
         driver.findElement(quantity).sendKeys(productQuantity);
         driver.findElement(checkBox).click();
-        driver.findElement(By.xpath(String.format(checkout1, "Checkout "))).click();
+        driver.findElement(By.xpath(String.format(checkout1, ProducBuyEnum.CHECKOUT.getResourcesName()))).click();
     }
 
     public void ShippingDetails() throws IOException {
@@ -182,15 +183,15 @@ public class ProductBuy {
 
         driver.findElement(countryDropDown).click();
         driver.findElement(country).click();
-        driver.findElement(By.xpath(String.format(userDetail, "BillingNewAddress_City", "BillingNewAddress.City"))).sendKeys(userCity);
-        driver.findElement(By.xpath(String.format(userDetail, "BillingNewAddress_Address1", "BillingNewAddress.Address1"))).sendKeys(userAddress);
-        driver.findElement(By.xpath(String.format(userDetail, "BillingNewAddress_ZipPostalCode", "BillingNewAddress.ZipPostalCode"))).sendKeys(userZipCode);
-        driver.findElement(By.xpath(String.format(userDetail, "BillingNewAddress_PhoneNumber", "BillingNewAddress.PhoneNumber"))).sendKeys(userPhoneNumber);
-        driver.findElement(By.xpath(String.format(continueButton, "Billing.save()"))).click();
-        driver.findElement(By.xpath(String.format(continueButton, "ShippingMethod.save()"))).click();
-        driver.findElement(By.xpath(String.format(continueButton, "PaymentMethod.save()"))).click();
-        driver.findElement(By.xpath(String.format(continueButton, "PaymentInfo.save()"))).click();
-        driver.findElement(By.xpath(String.format(continueButton, "ConfirmOrder.save()"))).click();
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.CITY.getResourcesName()))).sendKeys(userCity);
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.ADDRESS.getResourcesName()))).sendKeys(userAddress);
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.POSTALCODE.getResourcesName()))).sendKeys(userZipCode);
+        driver.findElement(By.xpath(String.format(userDetail, ProducBuyEnum.PHONENUMBER.getResourcesName()))).sendKeys(userPhoneNumber);
+        driver.findElement(By.xpath(String.format(continueButton, ProducBuyEnum.BILLINGBUTTON.getResourcesName()))).click();
+        driver.findElement(By.xpath(String.format(continueButton, ProducBuyEnum.SHIPPINGBUTTON.getResourcesName()))).click();
+        driver.findElement(By.xpath(String.format(continueButton, ProducBuyEnum.PAYMENTBUTTON.getResourcesName()))).click();
+        driver.findElement(By.xpath(String.format(continueButton, ProducBuyEnum.PAYMENTINOFOBUTTON.getResourcesName()))).click();
+        driver.findElement(By.xpath(String.format(continueButton, ProducBuyEnum.CONFIRMORDERBUTTON.getResourcesName()))).click();
     }
 
     public void VerifyOrder() {
